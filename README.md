@@ -1,152 +1,167 @@
 # VARTA-SETU 🌐🎙️
 
-[![Hackathon](https://img.shields.io/badge/Hackathon-AI--BHARAT-orange.svg)](https://ai4bharat.iitm.ac.in/)
+[![Hackathon](https://img.shields.io/badge/AI--FOR--BHARAT-Hackathon-orange.svg)](https://aiforbharat.iitm.ac.in/)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
-[![Django](https://img.shields.io/badge/Framework-Django-green.svg)](https://www.djangoproject.com/)
+[![Django](https://img.shields.io/badge/Framework-Django-092e20.svg)](https://www.djangoproject.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![AWS](https://img.shields.io/badge/Cloud-AWS%20Polly-FF9900?logo=amazonservices)](https://aws.amazon.com/polly/)
+[![AWS](https://img.shields.io/badge/AWS-Polly%20%26%20Bedrock-232F3E?logo=amazon-aws)](https://aws.amazon.com/)
 
-**VARTA-SETU** (Varta = Conversation/News, Setu = Bridge) is an innovative AI-driven pipeline developed for the **AI-BHARAT Hackathon**. The project aims to democratize access to global information by translating live international news broadcasts (like CNN, BBC, etc.) into local Indian languages in real-time. 
+**VARTA-SETU** (meaning *Communication Bridge*) is an advanced AI-powered pipeline designed for the **AI-FOR-BHARAT Hackathon**. The project breaks the language barrier by providing real-time translation and voice synthesis of live global news channels (like CNN, BBC, etc.) into local Indian languages. 
 
-By leveraging cutting-edge Speech-to-Text (STT), Machine Translation, and specialized Text-to-Speech (TTS) models like **Indic TTS** and **Amazon Polly**, VARTA-SETU breaks the language barrier for millions of Indian citizens.
-
----
-
-## ✨ Key Features
-
-- **Live Stream Integration**: Directly fetches audio from live YouTube news channels using `yt-dlp`.
-- **High-Accuracy Transcription**: Utilizes `faster-whisper` for near real-time English speech-to-text conversion.
-- **Multi-Model TTS**: 
-    - **Indic TTS**: High-quality synthesis for regional Indian nuances.
-    - **Amazon Polly**: Professional-grade neural voices for seamless listening.
-- **Smart Translation**: Employs `deep-translator` and **Amazon Bedrock (Claude 3.5 Sonnet)** for context-aware translation into Indian languages.
-- **Real-time Pipeline**: Designed for low-latency processing using Django Channels and asynchronous workers.
-- **Audio Refinement**: Uses `pydub` and `soundfile` to ensure output audio is clear and synchronized.
+By leveraging cutting-edge STT (Speech-to-Text), LLM-based refinement, and a hybrid TTS (Text-to-Speech) approach using **Indic TTS** and **Amazon Polly**, VARTA-SETU makes global information accessible to every Indian in their mother tongue.
 
 ---
 
-## 🛠 Tech Stack
+## 🚀 Key Features
 
-- **Backend**: Django, Daphne (Asynchronous Server Gateway Interface)
-- **AI/ML Models**:
-    - **Transcription**: Faster-Whisper (OpenAI)
-    - **Translation**: Deep-translator, Amazon Bedrock (Claude 3.5 Sonnet)
-    - **TTS**: AI4Bharat Indic-TTS, Amazon Polly, Parler-TTS
-- **Cloud Services**: AWS Boto3 (Polly, Bedrock)
-- **Audio Processing**: Pydub, Soundfile, FFmpeg, ImageIO
-- **Core Libraries**: Torch (PyTorch), NumPy, Transformers, Protobuf
+- **Live Stream Integration**: Directly fetches audio from YouTube Live news channels using `yt-dlp`.
+- **High-Accuracy Transcription**: Utilizes `faster-whisper` for near-instant and accurate English speech-to-text conversion.
+- **LLM Refinement**: Uses **Amazon Bedrock (Claude 3.5 Sonnet)** to ensure translations are contextually accurate and culturally relevant for Indian audiences.
+- **Hybrid TTS Engine**: 
+    - **Amazon Polly**: For high-quality, neural cloud-based synthesis.
+    - **Indic TTS / Parler-TTS**: For localized, high-fidelity Indian language nuances.
+- **Asynchronous Processing**: Built with **Django Channels** and **Daphne** to handle real-time audio streams efficiently.
+- **Multi-Language Support**: Targeted at major Indian languages including Hindi, Marathi, Bengali, Tamil, Telugu, and more.
 
 ---
 
-## 📂 Repository Structure
+## 🛠️ Tech Stack
+
+### Backend & Infrastructure
+- **Language:** Python 3.9+
+- **Framework:** Django, Django Channels (WebSockets)
+- **Server:** Daphne (ASGI)
+- **Audio Processing:** Pydub, Soundfile, FFMPEG
+
+### AI/ML Models
+- **Speech-to-Text:** `faster-whisper`
+- **Translation:** `deep-translator` & Amazon Bedrock (Claude 3.5 Sonnet)
+- **Text-to-Speech:** 
+    - **Cloud:** Amazon Polly (Boto3)
+    - **Local/Open Source:** Indic TTS, Parler-TTS, Transformers (HuggingFace)
+- **Compute:** PyTorch
+
+---
+
+## 📁 Repository Structure
 
 ```text
-.
-├── core/                   # Django project configuration
-├── config/                 # Environment and model configurations
-├── refined_indic_tts.py    # Optimized logic for Indic TTS generation
+├── core/                   # Project settings and routing
+├── config/                 # Configuration files for models
+├── refined_indic_tts.py    # Logic for specialized Indian language synthesis
 ├── manage.py               # Django management script
 ├── requirements.txt        # Project dependencies
-├── test_*.py               # Comprehensive test suite for individual components
-├── verify_pipeline.py      # Script to validate the end-to-end integration
+├── test_*.py               # Comprehensive test suite for various components
+├── verify_pipeline.py      # End-to-end integration verification
 └── .env.example            # Template for environment variables
 ```
 
 ---
 
-## 🚀 Installation Guide
+## ⚙️ Installation Guide
 
 ### Prerequisites
 - Python 3.9 or higher
-- FFmpeg installed on your system
-- AWS Credentials (for Polly and Bedrock)
+- **FFMPEG** installed on your system
+- AWS Account (for Polly and Bedrock access)
+- NVIDIA GPU (optional but recommended for local inference)
 
-### Step 1: Clone the Repository
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/your-username/varta-setu.git
 cd varta-setu
 ```
 
-### Step 2: Set Up Virtual Environment
+### 2. Set Up Virtual Environment
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-### Step 3: Install Dependencies
+### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
-# Install Parler-TTS from source as required
-pip install git+https://github.com/huggingface/parler-tts.git
+# Note: Parler-TTS is installed directly from GitHub as specified in requirements.txt
 ```
 
-### Step 4: Configure Environment Variables
+### 4. Configuration
 Create a `.env` file based on `.env.example`:
-```env
-AWS_ACCESS_KEY_ID=your_key
-AWS_SECRET_ACCESS_KEY=your_secret
-AWS_REGION=your_region
-# Add other necessary keys
+```bash
+cp .env.example .env
 ```
+Fill in your credentials:
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `AWS_REGION`
+- `DATABASE_URL` (if using external DB)
 
-### Step 5: Database Migrations
+### 5. Run Migrations
 ```bash
 python manage.py migrate
 ```
 
 ---
 
-## 💻 Usage Examples
+## 📋 Usage
 
-### 1. Running the Integration Verification
-Before starting the server, verify that the AI models and AWS services are connected correctly:
+### Verifying Components
+Before running the full pipeline, verify that individual services are working:
+```bash
+# Test Amazon Polly
+python test_polly.py
+
+# Test YouTube Stream Downloader
+python test_ytdlp.py
+
+# Test Local Indic TTS
+python test_indic_tts.py
+```
+
+### Running the Application
+To start the development server with WebSocket support:
+```bash
+daphne -p 8000 core.asgi:application
+```
+
+### Running the Integrated Pipeline
+To verify the full integration from stream to translated audio:
 ```bash
 python verify_pipeline.py
 ```
 
-### 2. Testing YouTube Audio Extraction
-To test if the system can fetch audio from a live link:
-```bash
-python test_ytdlp.py
-```
-
-### 3. Generating Indic TTS Output
-To test the specific translation and voice generation for Indian languages:
-```bash
-python test_indic_tts.py
-```
-
-### 4. Start the Application
-```bash
-python manage.py runserver
-```
-
 ---
 
-## 🛠 Verification Tools
-The repository includes several debug scripts to ensure smooth operation:
-- `check_models.py`: Checks if local models (Whisper/Transformers) are loaded correctly.
-- `test_polly.py`: Validates AWS Polly connectivity and voice generation.
-- `debug_model_load.py`: Profiles memory and loading time for AI models.
+## 🛠️ Development & Debugging
+
+The repository includes several scripts to help debug specific parts of the AI pipeline:
+- `debug_model_load.py`: Check if Torch and HuggingFace models load correctly in your environment.
+- `check_indictts_config.py`: Validates the configuration for the local TTS engine.
+- `test_audio_debug.py`: Utility to verify audio sample rates and formats.
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. 
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+We welcome contributions to VARTA-SETU! 
+1. **Fork** the repository.
+2. **Create a Feature Branch** (`git checkout -b feature/AmazingFeature`).
+3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`).
+4. **Push** to the branch (`git push origin feature/AmazingFeature`).
+5. **Open a Pull Request**.
 
 ---
 
-**VARTA-SETU** - *Connecting the world to India, one voice at a time.* 🇮🇳
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🌟 Acknowledgments
+
+- **AI-FOR-BHARAT** for the inspiration and platform.
+- **AWS** for providing the Bedrock and Polly infrastructure.
+- **HuggingFace** for the `faster-whisper` and `parler-tts` models.
+
+---
+*Built with ❤️ for a more connected India.*
