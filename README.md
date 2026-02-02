@@ -238,7 +238,7 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
 
 ## 📞 Contact & Acknowledgements
 
-**Project Lead:** [Your Name/Team Name]  
+**Project Lead:** ADARSH DUBEY 
 **Hackathon:** [AI-FOR-BHARAT](https://aiforbharat.iitm.ac.in/)
 
 - **Special Thanks**: 
